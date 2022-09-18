@@ -65,9 +65,14 @@ final class MovieQuizViewController: UIViewController {
     private var currentQuestionIndex: Int = 0
     private var correctAnswers: Int = 0
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var textLabel: UILabel!
     @IBOutlet private weak var counterLabel: UILabel!
+    @IBOutlet private var buttonsCollection: [UIButton]!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,10 +117,12 @@ final class MovieQuizViewController: UIViewController {
         correctAnswers += isCorrect ? 1 : 0
         imageView.layer.borderWidth = 8
         imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
+        enableOrDisableButtons()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.showNextQuestionOrResults()
             self.imageView.layer.borderWidth = 0
+            self.enableOrDisableButtons()
         }
     }
     
@@ -136,13 +143,22 @@ final class MovieQuizViewController: UIViewController {
         }
     }
     
-    @IBAction private func yesButtonClicked() {
-        let isUserGuessed = questions[currentQuestionIndex].correctAnswer ? true : false
+    private func enableOrDisableButtons() {
+        for button in buttonsCollection {
+            button.isEnabled.toggle()
+        }
+    }
+    
+    private func checkUserAnswer(userAnswer answer: Bool) {
+        let isUserGuessed = questions[currentQuestionIndex].correctAnswer == answer ? true : false
         showAnswerResult(isCorrect: isUserGuessed)
     }
     
+    @IBAction private func yesButtonClicked() {
+        checkUserAnswer(userAnswer: true)
+    }
+    
     @IBAction private func noButtonClicked() {
-        let isUserGuessed = questions[currentQuestionIndex].correctAnswer ? false : true
-        showAnswerResult(isCorrect: isUserGuessed)
+        checkUserAnswer(userAnswer: false)
     }
 }
