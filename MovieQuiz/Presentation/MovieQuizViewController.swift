@@ -83,7 +83,6 @@ final class MovieQuizViewController: UIViewController {
             currentQuestionIndex += 1
             questionFactory?.requestNextQuestion()
         }
-        print(statisticService?.totalAccuracy ?? 0.0)
     }
     
     private func enableOrDisableButtons() {
