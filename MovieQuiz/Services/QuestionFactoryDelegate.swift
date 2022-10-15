@@ -7,6 +7,8 @@
 
 import Foundation
 
-protocol QuestionFactoryDelegate: AnyObject {   // Using 'class' keyword to define a class-constrained protocol is deprecated; use 'AnyObject' instead
+protocol QuestionFactoryDelegate: AnyObject {
     func didReceiveNextQuestion(question: QuizQuestion?)
+    func didLoadDataFromServer()
+    func didFailToLoadData(with error: Error)
 }
