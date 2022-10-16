@@ -122,18 +122,25 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="adG-HC-K2r">
+                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="q9N-QU-900" secondAttribute="trailing" constant="20" id="CwA-nO-N7M"/>
                             <constraint firstItem="q9N-QU-900" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="R3Z-34-Le3"/>
+                            <constraint firstItem="adG-HC-K2r" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Te9-De-rA4"/>
+                            <constraint firstItem="adG-HC-K2r" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="VLD-xV-XR1"/>
                             <constraint firstItem="q9N-QU-900" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="Wuo-T5-u9v"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="adG-HC-K2r" id="VGT-yB-E1R"/>
                         <outlet property="counterLabel" destination="jlv-V6-LUg" id="SFj-P1-Ada"/>
-                        <outlet property="imageView" destination="4eu-LJ-oTY" id="9sg-ao-9gO"/>
+                        <outlet property="imageView" destination="4eu-LJ-oTY" id="Eaj-ha-d5y"/>
+                        <outlet property="stackView" destination="q9N-QU-900" id="Qwb-xQ-9Vz"/>
                         <outlet property="textLabel" destination="u8k-U1-eYe" id="3os-LY-Q7A"/>
                         <outletCollection property="buttonsCollection" destination="2pU-of-kDA" collectionClass="NSMutableArray" id="ND3-2G-akc"/>
                         <outletCollection property="buttonsCollection" destination="Dcp-Km-rOF" collectionClass="NSMutableArray" id="Xib-Ve-TlC"/>
