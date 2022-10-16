@@ -26,8 +26,13 @@ struct MoviesLoader: MoviesLoading {
         networkClient.fetch(url: mostPopularMoviesUrl) { result in
             do {
                 let data = try result.get()
-                guard let decodedData = try? JSONDecoder().decode(MostPopularMovies.self, from: data) else { return }
-                handler(.success(decodedData))
+                let decodedData = try JSONDecoder().decode(MostPopularMovies.self, from: data)
+                if decodedData.errorMessage.isEmpty {
+                    handler(.success(decodedData))
+                } else {
+                    let error = NSError(domain: decodedData.errorMessage, code: 0)
+                    handler(.failure(error))
+                }
             } catch let error {
                 handler(.failure(error))
             }

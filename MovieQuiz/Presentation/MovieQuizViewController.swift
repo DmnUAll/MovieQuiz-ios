@@ -34,18 +34,13 @@ final class MovieQuizViewController: UIViewController {
     }
     
     private func showLoadingIndicator() {
-        activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         stackView.isHidden = true
     }
     
     private func hideLoadingIndicator() {
-        activityIndicator.isHidden = true
         activityIndicator.stopAnimating()
-        DispatchQueue.main.async {
-            self.stackView.isHidden = false
-
-        }
+        self.stackView.isHidden = false
     }
     
     private func showNetworkError(message: String) {
