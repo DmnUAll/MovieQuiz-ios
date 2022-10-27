@@ -26,6 +26,7 @@ extension AlertPresenter: AlertPresenterProtocol {
         
         let action = UIAlertAction(title: alertModel.buttonText, style: .default, handler: alertModel.completionHandler)
         alert.addAction(action)
+        alert.view.accessibilityIdentifier = "Game results"
         delegate?.presentAlert(alert)
     }
 }
