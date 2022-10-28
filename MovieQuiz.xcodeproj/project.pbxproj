@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		61454F8B290C0D5E0016F835 /* MovieQuizPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61454F8A290C0D5E0016F835 /* MovieQuizPresenter.swift */; };
 		618AB56B290A8E1D00EB9C8B /* MovieQuizTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618AB56A290A8E1D00EB9C8B /* MovieQuizTests.swift */; };
 		618AB572290A935800EB9C8B /* ArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618AB571290A935800EB9C8B /* ArrayTests.swift */; };
 		618AB574290A963C00EB9C8B /* MoviesLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618AB573290A963C00EB9C8B /* MoviesLoaderTests.swift */; };
@@ -57,6 +58,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		61454F8A290C0D5E0016F835 /* MovieQuizPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieQuizPresenter.swift; sourceTree = "<group>"; };
 		618AB568290A8E1D00EB9C8B /* MovieQuizTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieQuizTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		618AB56A290A8E1D00EB9C8B /* MovieQuizTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieQuizTests.swift; sourceTree = "<group>"; };
 		618AB571290A935800EB9C8B /* ArrayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayTests.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 			children = (
 				61FD530C28E5C11400AC80EC /* AlertPresenter.swift */,
 				AD1ABAB52831907B00B3E448 /* MovieQuizViewController.swift */,
+				61454F8A290C0D5E0016F835 /* MovieQuizPresenter.swift */,
 				AD1ABAB72831907B00B3E448 /* Main.storyboard */,
 			);
 			path = Presentation;
@@ -413,6 +416,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61454F8B290C0D5E0016F835 /* MovieQuizPresenter.swift in Sources */,
 				61B671AE28FAB3F500BB7B0E /* NetworkClient.swift in Sources */,
 				AD5EE5DE284D7887003966EF /* UIColor+Extensions.swift in Sources */,
 				61FD530D28E5C11400AC80EC /* AlertPresenter.swift in Sources */,

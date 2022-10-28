@@ -2,13 +2,12 @@ import UIKit
 
 final class MovieQuizViewController: UIViewController {
     
-    private let questionsAmount: Int = 10
     private var alertPresenter: AlertPresenterProtocol?
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
     private var statisticService: StatisticService?
+    private let presenter = MovieQuizPresenter()
     
-    private var currentQuestionIndex: Int = 0
     private var correctAnswers: Int = 0
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -57,13 +56,6 @@ final class MovieQuizViewController: UIViewController {
         alertPresenter?.show(alertModel: alertModel)
     }
     
-    private func convert(model: QuizQuestion) -> QuizStepViewModel {
-        return QuizStepViewModel(
-            image: UIImage(data: model.image) ?? UIImage(),
-            question: model.text,
-            questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)")
-    }
-    
     private func show(quiz step: QuizStepViewModel) {
         imageView.image = step.image
         textLabel.text = step.question
@@ -86,8 +78,8 @@ final class MovieQuizViewController: UIViewController {
     }
     
     private func showNextQuestionOrResults() {
-        if currentQuestionIndex == questionsAmount - 1 {
-            statisticService?.store(correct: correctAnswers, total: questionsAmount)
+        if presenter.isLastQuestion() {
+            statisticService?.store(correct: correctAnswers, total: presenter.questionsAmount)
             
             let alertModel = AlertModel(
                 title: "Этот раунд окончен!",
@@ -99,14 +91,14 @@ final class MovieQuizViewController: UIViewController {
                 completionHandler: { [ weak self ] _ in
                     guard let self = self else { return }
                     
-                    self.currentQuestionIndex = 0
+                    self.presenter.resetQuestionIndex()
                     self.correctAnswers = 0
                     
                     self.questionFactory?.requestNextQuestion()
                 })
             alertPresenter?.show(alertModel: alertModel)
         } else {
-            currentQuestionIndex += 1
+            presenter.switchToNextQuestion()
             questionFactory?.requestNextQuestion()
         }
     }
@@ -143,7 +135,7 @@ extension MovieQuizViewController: QuestionFactoryDelegate {
         }
         
         currentQuestion = question
-        let viewModel = convert(model: question)
+        let viewModel = presenter.convert(model: question)
         DispatchQueue.main.async { [weak self] in
             self?.show(quiz: viewModel)
         }
