@@ -4,7 +4,6 @@ final class MovieQuizViewController: UIViewController {
     
     private var alertPresenter: AlertPresenterProtocol?
     private var questionFactory: QuestionFactoryProtocol?
-    private var currentQuestion: QuizQuestion?
     private var statisticService: StatisticService?
     private let presenter = MovieQuizPresenter()
     
@@ -24,6 +23,7 @@ final class MovieQuizViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        presenter.viewController = self
         alertPresenter = AlertPresenter(delegate: self)
         questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
         statisticService = StatisticServiceImplementation()
@@ -62,7 +62,7 @@ final class MovieQuizViewController: UIViewController {
         counterLabel.text = step.questionNumber
     }
     
-    private func showAnswerResult(isCorrect: Bool) {
+    func showAnswerResult(isCorrect: Bool) {
         correctAnswers += isCorrect ? 1 : 0
         imageView.layer.borderWidth = 8
         imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
@@ -109,20 +109,12 @@ final class MovieQuizViewController: UIViewController {
         }
     }
     
-    private func checkUserAnswer(userAnswer answer: Bool) {
-        guard let currentQuestion = currentQuestion else {
-            return
-        }
-        let isUserGuessed = currentQuestion.correctAnswer == answer ? true : false
-        showAnswerResult(isCorrect: isUserGuessed)
+    @IBAction private func yesButtonTapped() {
+        presenter.yesButtonClicked()
     }
     
-    @IBAction private func yesButtonClicked() {
-        checkUserAnswer(userAnswer: true)
-    }
-    
-    @IBAction private func noButtonClicked() {
-        checkUserAnswer(userAnswer: false)
+    @IBAction private func noButtonTapped() {
+        presenter.noButtonClicked()
     }
 }
 
@@ -134,7 +126,7 @@ extension MovieQuizViewController: QuestionFactoryDelegate {
             return
         }
         
-        currentQuestion = question
+        presenter.currentQuestion = question
         let viewModel = presenter.convert(model: question)
         DispatchQueue.main.async { [weak self] in
             self?.show(quiz: viewModel)
