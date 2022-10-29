@@ -1,9 +1,19 @@
 import UIKit
 
-final class MovieQuizViewController: UIViewController {
+protocol MovieQuizViewControllerProtocol: AnyObject {
+    var alertPresenter: AlertPresenterProtocol? { get }
+    func show(quiz step: QuizStepViewModel)
+    func highlightImage(isAnswerCorrect: Bool)
+    func showLoadingIndicator()
+    func hideLoadingIndicator()
+    func showNetworkError(message: String)
+    func removeHighlight()
+    func enableOrDisableButtons()
+}
+
+final class MovieQuizViewController: UIViewController, MovieQuizViewControllerProtocol {
     
     var alertPresenter: AlertPresenterProtocol?
-    private var statisticService: StatisticService?
     private var presenter: MovieQuizPresenter!
         
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -22,7 +32,6 @@ final class MovieQuizViewController: UIViewController {
         
         presenter = MovieQuizPresenter(viewController: self)
         alertPresenter = AlertPresenter(delegate: self)
-        statisticService = StatisticServiceImplementation()
     }
     
     func showLoadingIndicator() {
@@ -43,7 +52,7 @@ final class MovieQuizViewController: UIViewController {
                                     buttonText: "Попробовать еще раз",
                                     completionHandler: { [weak self] _ in
             guard let self = self else { return }
-            self.presenter.loadQuestions()
+            self.presenter.restartGame()
         })
         
         alertPresenter?.show(alertModel: alertModel)
@@ -55,22 +64,17 @@ final class MovieQuizViewController: UIViewController {
         counterLabel.text = step.questionNumber
     }
     
-    func showAnswerResult(isCorrect: Bool) {
-        presenter.didAnswer(isCorrectAnswer: isCorrect)
+    func highlightImage(isAnswerCorrect: Bool) {
         imageView.layer.borderWidth = 8
-        imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
+        imageView.layer.borderColor = isAnswerCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
         enableOrDisableButtons()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [ weak self ] in
-            guard let self = self else { return }
-            
-            self.presenter.showNextQuestionOrResults()
-            self.imageView.layer.borderWidth = 0
-            self.enableOrDisableButtons()
-        }
     }
     
-    private func enableOrDisableButtons() {
+    func removeHighlight() {
+        self.imageView.layer.borderWidth = 0
+    }
+    
+    func enableOrDisableButtons() {
         for button in buttonsCollection {
             button.isEnabled.toggle()
         }
