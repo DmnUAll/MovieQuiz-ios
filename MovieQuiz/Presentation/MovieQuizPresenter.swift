@@ -33,11 +33,23 @@ final class MovieQuizPresenter {
             questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)")
     }
     
+    func didReceiveNextQuestion(question: QuizQuestion?) {
+        guard let question = question else {
+            return
+        }
+        
+        currentQuestion = question
+        let viewModel = convert(model: question)
+        DispatchQueue.main.async { [weak self] in
+            self?.viewController?.show(quiz: viewModel)
+        }
+    }
+    
     private func checkUserAnswer(userAnswer answer: Bool) {
         guard let currentQuestion = currentQuestion else {
             return
         }
-        let isUserGuessed = currentQuestion.correctAnswer == answer ? true : false
+        let isUserGuessed = currentQuestion.correctAnswer == answer
         viewController?.showAnswerResult(isCorrect: isUserGuessed)
     }
     
