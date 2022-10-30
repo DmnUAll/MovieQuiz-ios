@@ -1,7 +1,7 @@
 import UIKit
 
 protocol MovieQuizViewControllerProtocol: AnyObject {
-    var alertPresenter: AlertPresenterProtocol? { get }
+    var alertPresenter: AlertPresenterProtocol! { get }
     func show(quiz step: QuizStepViewModel)
     func highlightImage(isAnswerCorrect: Bool)
     func showLoadingIndicator()
@@ -13,7 +13,7 @@ protocol MovieQuizViewControllerProtocol: AnyObject {
 
 final class MovieQuizViewController: UIViewController, MovieQuizViewControllerProtocol {
     
-    var alertPresenter: AlertPresenterProtocol?
+    var alertPresenter: AlertPresenterProtocol!
     private var presenter: MovieQuizPresenter!
         
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -55,7 +55,7 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
             self.presenter.restartGame()
         })
         
-        alertPresenter?.show(alertModel: alertModel)
+        alertPresenter.show(alertModel: alertModel)
     }
     
     func show(quiz step: QuizStepViewModel) {
