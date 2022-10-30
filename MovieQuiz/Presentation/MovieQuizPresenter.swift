@@ -18,13 +18,13 @@ final class MovieQuizPresenter {
     private var correctAnswers: Int = 0
     
     init(viewController: MovieQuizViewControllerProtocol) {
-            self.viewController = viewController
+        self.viewController = viewController
             
-            statisticService = StatisticServiceImplementation()
-            questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
-            questionFactory?.loadData()
-            viewController.showLoadingIndicator()
-        }
+        statisticService = StatisticServiceImplementation()
+        questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
+        questionFactory?.loadData()
+        viewController.showLoadingIndicator()
+    }
     
     private func isLastQuestion() -> Bool {
         currentQuestionIndex == questionsAmount - 1
