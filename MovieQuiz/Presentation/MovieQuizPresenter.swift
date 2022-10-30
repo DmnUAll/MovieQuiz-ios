@@ -55,7 +55,7 @@ final class MovieQuizPresenter {
         didAnswer(isCorrectAnswer: isCorrect)
         viewController?.highlightImage(isAnswerCorrect: isCorrect)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [ weak self ] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             guard let self = self else { return }
             
             self.proceedToNextQuestionOrResults()
